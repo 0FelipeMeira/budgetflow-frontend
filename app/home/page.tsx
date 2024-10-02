@@ -1,3 +1,5 @@
+"use client";
+
 import HomeCard from "@/components/HomeCard/HomeCard";
 import { useState } from "react";
 
