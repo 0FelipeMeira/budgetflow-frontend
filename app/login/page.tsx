@@ -1,6 +1,9 @@
+import React from 'react'
 
-const LoginPage = () => {
-  return <></>;
-};
+function Page_login() {
+  return (
+    <div>Textoteste</div>
+  )
+}
 
-export default LoginPage;
+export default Page_login;
