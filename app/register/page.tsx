@@ -1,15 +1,12 @@
 "use client";
 import React from 'react'
-import Input from '@/components/Input/Input';
+import RegisterCard from '@/components/RegisterCard.tsx/RegisterCard';
 
 function Page_register() {
   return (
-    <>
-      
-      <Input label='Nome' ></Input>
-      <Input label='Email' ></Input>
-      <Input label='Senha' ></Input>
-    </>
+    <div className='h-screen flex items-center justify-center '>
+      <RegisterCard />
+    </div>
   )
 }
 

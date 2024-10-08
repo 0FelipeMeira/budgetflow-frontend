@@ -8,10 +8,10 @@ interface InputProps {
 }
 const Input = ({ label, placeholder }: InputProps) => {
     return (
-        <>
-            <label className="font-bold">{label}</label>
-            <input type="text" className="border-4 border-blue-400"></input>
-        </>
+        <div className="flex flex-col">
+            <label className="font-bold text-main-5">{label}</label>
+            <input type="text" className="w-80 border-2 border-main-5 rounded-3xl"></input>
+        </div>
     )
 }
 
