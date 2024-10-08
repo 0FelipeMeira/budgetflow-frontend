@@ -1,6 +1,13 @@
+"use client";
+import React from 'react'
+import RegisterCard from '@/components/RegisterCard.tsx/RegisterCard';
 
-const LoginPage = () => {
-  return <></>;
-};
+function Page_register() {
+  return (
+    <div className='h-screen flex items-center justify-center '>
+      <RegisterCard />
+    </div>
+  )
+}
 
-export default LoginPage;
+export default Page_register
