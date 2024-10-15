@@ -6,6 +6,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+ 
 }
 
 @media (prefers-color-scheme: daark) {
@@ -19,6 +20,7 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+  height: 100svh;
 }
 
 * {
