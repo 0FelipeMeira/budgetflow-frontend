@@ -1,20 +1,20 @@
-import React from 'react'
-import Input from '@/components/Input/Input';
-import Title from '@/components/Title/Title';
-import ButtonLogin from '@/components/ButtonLogin/ButtonLogin';
-import Link from 'next/link';
+import React from "react";
+import Input from "../Input/Input";
+import ButtonLogin from "../ButtonLogin/ButtonLogin";
+import Title from "../Title/Title";
+import Link from "next/link";
+import Image from 'next/image';
 
 
 function LoginCard() {
   return (
-    <div className="bg-slate-200 relative flex flex-col justify-center items-center gap-2 mt-20 w-96 h-2/5">
-    <Title text="Sign In"></Title>
-    <Input label="Username"/>
-    <Input label="Password"/>
-    <ButtonLogin txt="Sign In"/>
-    <Link href="/login" className="text-main-4 text-md font-semibold"> Register </Link>
-    
-</div>
+    <div className="bg-white w-7/12 h-screen flex flex-col justify-center items-center gap-2  ">
+      <Title text="Login"></Title>
+      <Input label="Username" />
+      <Input label="Password" />
+      <ButtonLogin txt="Sign In" />
+      <Link href="/register" className="text-main-4 text-md font-semibold"> Sign Up </Link>
+    </div>
   )
 }
 
