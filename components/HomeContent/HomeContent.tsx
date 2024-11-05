@@ -1,28 +1,35 @@
 "use client";
-import React, { useEffect } from "react";
 import HomeCard from "@/components/HomeCard/HomeCard";
-import HomeHeatMap from "@/components/HomeHeatMap/HomeHeatMap";
+import HomeHeatMap, {
+  HeatmapValue,
+} from "@/components/HomeHeatMap/HomeHeatMap";
 import HomeInputCard from "@/components/HomeInputCard/HomeInputCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axiosInstance from "../api/apiInstance";
 
 const HomeContent = () => {
   // -- Mocking Data -----------------------------------------------------------
   const categoryList = [
-    { id: 1, name: "category 01", label: "category 01" },
-    { id: 2, name: "category 02", label: "category 02" },
-    { id: 3, name: "category 03", label: "category 03" },
+    { id: 1, name: "FOOD", label: "FOOD" },
+    { id: 2, name: "TRAVELS", label: "TRAVELS" },
+    { id: 3, name: "ENTERTAINMENTS", label: "ENTERTAINMENTS" },
+    { id: 4, name: "SHOPPING", label: "SHOPPING" },
+    { id: 5, name: "HEALTH", label: "HEALTH" },
+    { id: 6, name: "BILLS", label: "BILLS" },
   ];
-  const chartData = [
-    { date: "2024-09-02", count: 1 },
-    { date: "2024-09-03", count: 2 },
-    { date: "2024-09-04", count: 3 },
-    { date: "2024-09-05", count: 4 },
-  ];
+  // const chartData = [
+  //   { date: "2024-09-02", balance: 1 },
+  //   { date: "2024-09-03", balance: 2 },
+  //   { date: "2024-09-04", balance: 3 },
+  //   { date: "2024-09-05", balance: 4 },
+  // ];
 
   // -- Setting Variables ------------------------------------------------------
   const [balance, setBalance] = useState(0);
   const [income, setIncome] = useState(0);
   const [outcome, setOutcome] = useState(0);
+
+  const [chartData, setChartData] = useState<HeatmapValue[] | undefined>();
 
   // -- Setting functions default values ---------------------------------------
   const [inputIncomeData, setInputIncomeData] = useState({
@@ -41,18 +48,63 @@ const HomeContent = () => {
   // -- Calling Functions ------------------------------------------------------
 
   useEffect(() => {
-    // ...call inital query to set values
-    setBalance(1000);
-    setIncome(1000);
-    setOutcome(1000);
+    axiosInstance
+      .get("api/v1/finance/balance")
+      .then((res) => {
+        console.log("Success on balance");
+        setBalance(res.data.balance);
+        setIncome(res.data.totalSalary);
+        setOutcome(res.data.totalExepenses);
+      })
+      .catch((err) => {
+        console.error("Error on balance");
+        console.error(err);
+      });
+    axiosInstance
+      .get("api/v1/finance/history")
+      .then((res) => {
+        console.log("Success on history");
+        console.log(res);
+        setChartData(res.data)
+      })
+      .catch((err) => {
+        console.error("Error on history");
+        console.error(err);
+      });
   }, []);
 
   useEffect(() => {
     // Call query to add new input from INCOME
+    if (inputIncomeData.value > 0) {
+      axiosInstance
+        .post("api/v1/salary", {
+          value: inputIncomeData.value,
+        })
+        .then((res) => {
+          console.log("enviou os dados - inputIncomeData\n", inputIncomeData);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }, [inputIncomeData]);
 
   useEffect(() => {
     // Call query to add new input from OUTCOME
+    if (inputOutcomeData.value > 0) {
+      axiosInstance
+        .post("api/v1/expenses", {
+          expenseName: inputOutcomeData.description,
+          expenseValue: inputOutcomeData.value,
+          categories: inputOutcomeData.category_id,
+        })
+        .then((res) => {
+          console.log("enviou os dados - inputOutcomeData\n", inputOutcomeData);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }, [inputOutcomeData]);
 
   return (
@@ -74,6 +126,7 @@ const HomeContent = () => {
             title="Add Outcome"
             categoryList={categoryList}
             setData={setInputOutcomeData}
+            isIncome={false}
           />
         </div>
 

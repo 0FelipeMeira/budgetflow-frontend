@@ -9,9 +9,16 @@ type Props = {
   buttonText: string;
   categoryList: any[];
   setData: any;
+  isIncome?: boolean;
 };
 
-const HomeInputCard = ({ buttonType, title, categoryList, setData }: Props) => {
+const HomeInputCard = ({
+  buttonType,
+  title,
+  categoryList,
+  setData,
+  isIncome = true,
+}: Props) => {
   const [date, setDate] = useState<Date | null>(null);
   const [value, setValue] = useState(0);
   const [description, setDescription] = useState("");
@@ -46,7 +53,7 @@ const HomeInputCard = ({ buttonType, title, categoryList, setData }: Props) => {
     <div className="flex flex-col bg-white items-center justify-center p-4 rounded-xl gap-3">
       <h1 className="text-xl font-semibold text-main-1">{title}</h1>
 
-      <div className="grid grid-cols-2 gap-2 w-11/12 items-end  ">
+      <div className="grid grid-cols-2 gap-2 w-11/12 items-center h-full">
         <div className="flex flex-col items-center gap-1">
           <label
             className="font-semibold p-1 text-center"
@@ -81,34 +88,40 @@ const HomeInputCard = ({ buttonType, title, categoryList, setData }: Props) => {
           />
         </div>
 
-        <div className="flex flex-col items-center gap-1">
-          <label
-            className="font-semibold p-1 text-center"
-            htmlFor="incomeCategory"
-          >
-            Insira a categoria
-          </label>
-          <select
-            className="w-full p-1 rounded-md outline-none border"
-            name="incomeCategory"
-            id="incomeCategory"
-            value={categoryId}
-            onChange={handleChange}
-          >
-            <option disabled value="">
-              -
-            </option>
-            {categoryList.map((e) => (
-              <option value={e.id} key={e.id}>
-                {e.label}
-              </option>
-            ))}
-          </select>
-        </div>
-        <HomeDatePicker date={date} setDate={setDate} />
+        {isIncome ? (
+          <></>
+        ) : (
+          <>
+            <div className="flex flex-col items-center gap-1">
+              <label
+                className="font-semibold p-1 text-center"
+                htmlFor="incomeCategory"
+              >
+                Insira a categoria
+              </label>
+              <select
+                className="w-full p-1 rounded-md outline-none border"
+                name="incomeCategory"
+                id="incomeCategory"
+                value={categoryId}
+                onChange={handleChange}
+              >
+                <option disabled value="">
+                  -
+                </option>
+                {categoryList.map((e) => (
+                  <option value={e.id} key={e.id}>
+                    {e.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </>
+        )}
+        {/* <HomeDatePicker date={date} setDate={setDate} /> */}
       </div>
       <button
-        className={`${button_color} hover:brightness-95 active:brightness-90 text-white h-full w-11/12 rounded-xl text-xl font-semibold`}
+        className={`${button_color} hover:brightness-95 active:brightness-90 text-white p-2 w-11/12 rounded-xl text-xl font-semibold`}
         onClick={sendData}
       >
         Add
